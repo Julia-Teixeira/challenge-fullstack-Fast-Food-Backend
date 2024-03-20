@@ -18,12 +18,19 @@ async function aplicarMigracoes() {
 
 async function resetarBancoDeDados() {
   try {
+    await prisma.payment.deleteMany();
+    await prisma.order.deleteMany();
+    await prisma.productOrder.deleteMany();
+    await prisma.additional.deleteMany();
     await prisma.product.deleteMany();
     await prisma.category.deleteMany();
-    await prisma.additional.deleteMany();
 
     await prisma.$executeRaw`TRUNCATE TABLE categories RESTART IDENTITY CASCADE;`;
     await prisma.$executeRaw`TRUNCATE TABLE additional RESTART IDENTITY CASCADE;`;
+    await prisma.$executeRaw`TRUNCATE TABLE orders RESTART IDENTITY CASCADE;`;
+    await prisma.$executeRaw`TRUNCATE TABLE payments RESTART IDENTITY CASCADE;`;
+    await prisma.$executeRaw`TRUNCATE TABLE "productOrder" RESTART IDENTITY CASCADE;`;
+    await prisma.$executeRaw`TRUNCATE TABLE products RESTART IDENTITY CASCADE;`;
 
     await aplicarMigracoes();
   } catch (error) {
