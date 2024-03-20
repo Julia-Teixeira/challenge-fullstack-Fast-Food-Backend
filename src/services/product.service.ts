@@ -13,7 +13,6 @@ class ProductService {
   async findProductById(id: number): Promise<TProductReturnById> {
     const product = await this.contactRepository.product.findUnique({
       where: { id },
-      include: { additionalIds: true },
     });
     return product as unknown as TProductReturnById;
   }
