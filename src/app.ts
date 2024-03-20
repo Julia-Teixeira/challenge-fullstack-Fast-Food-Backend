@@ -7,7 +7,7 @@ import express, { json } from "express";
 import AddData from "./database/data";
 import resetarBancoDeDados from "./database/clearDatabase";
 import productRouter from "./routes/product.router";
-import productOrderRouter from "./routes/productOrder.router";
+import productOrderRouter from "./routes/productOrder.route";
 import orderRouter from "./routes/order.router";
 
 const app = express();

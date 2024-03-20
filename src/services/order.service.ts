@@ -11,11 +11,35 @@ class OrderService {
         code: data.code,
         nameCostumer: data.nameCostumer,
         total: data.total,
-        productOrder: {
-          connect: { id: data.productOrder },
-        },
       },
     });
+
+    for (const productOrder of data.productOrder) {
+      await this.repository.order.update({
+        where: {
+          id: order.id,
+        },
+        data: {
+          productOrder: {
+            connect: {
+              id: productOrder,
+            },
+          },
+        },
+      });
+      await this.repository.productOrder.update({
+        where: {
+          id: productOrder,
+        },
+        data: {
+          Order: {
+            connect: {
+              id: order.id,
+            },
+          },
+        },
+      });
+    }
 
     const payment = await this.repository.payment.create({
       data: {
@@ -49,6 +73,7 @@ class OrderService {
         status: true,
         code: true,
         nameCostumer: true,
+        createdAt: true,
         productOrder: {
           select: {
             id: true,

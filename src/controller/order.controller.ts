@@ -12,6 +12,8 @@ class OrderController {
     const orders = await orderService.findAll();
     return response.json(orders).status(200);
   }
+
+  async updateOrder(request: Request, response: Response) {}
 }
 
 export default new OrderController();
