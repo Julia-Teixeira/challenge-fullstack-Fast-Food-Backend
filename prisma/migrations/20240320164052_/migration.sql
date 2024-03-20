@@ -48,6 +48,7 @@ CREATE TABLE "productOrder" (
     "id" SERIAL NOT NULL,
     "amount" INTEGER NOT NULL DEFAULT 1,
     "note" TEXT NOT NULL,
+    "total" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "productId" INTEGER NOT NULL,
     "orderId" INTEGER,
 
@@ -59,10 +60,9 @@ CREATE TABLE "orders" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "total" DECIMAL(65,30) NOT NULL DEFAULT 0.0,
-    "nameCostumer" VARCHAR(128) NOT NULL,
+    "nameCostumer" VARCHAR(128),
     "status" "OrderStatus" NOT NULL,
-    "note" TEXT NOT NULL,
-    "code" INTEGER NOT NULL,
+    "code" INTEGER,
 
     CONSTRAINT "orders_pkey" PRIMARY KEY ("id")
 );
@@ -80,16 +80,16 @@ CREATE TABLE "payments" (
 );
 
 -- CreateTable
-CREATE TABLE "_AdditionalToProduct" (
+CREATE TABLE "_AdditionalToProductOrder" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "_AdditionalToProduct_AB_unique" ON "_AdditionalToProduct"("A", "B");
+CREATE UNIQUE INDEX "_AdditionalToProductOrder_AB_unique" ON "_AdditionalToProductOrder"("A", "B");
 
 -- CreateIndex
-CREATE INDEX "_AdditionalToProduct_B_index" ON "_AdditionalToProduct"("B");
+CREATE INDEX "_AdditionalToProductOrder_B_index" ON "_AdditionalToProductOrder"("B");
 
 -- AddForeignKey
 ALTER TABLE "products" ADD CONSTRAINT "products_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -104,7 +104,7 @@ ALTER TABLE "productOrder" ADD CONSTRAINT "productOrder_orderId_fkey" FOREIGN KE
 ALTER TABLE "payments" ADD CONSTRAINT "payments_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_AdditionalToProduct" ADD CONSTRAINT "_AdditionalToProduct_A_fkey" FOREIGN KEY ("A") REFERENCES "additional"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_AdditionalToProductOrder" ADD CONSTRAINT "_AdditionalToProductOrder_A_fkey" FOREIGN KEY ("A") REFERENCES "additional"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_AdditionalToProduct" ADD CONSTRAINT "_AdditionalToProduct_B_fkey" FOREIGN KEY ("B") REFERENCES "products"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_AdditionalToProductOrder" ADD CONSTRAINT "_AdditionalToProductOrder_B_fkey" FOREIGN KEY ("B") REFERENCES "productOrder"("id") ON DELETE CASCADE ON UPDATE CASCADE;
