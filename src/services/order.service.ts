@@ -41,6 +41,32 @@ class OrderService {
 
     return order;
   }
+
+  async findAll() {
+    const orders = await this.repository.order.findMany({
+      select: {
+        id: true,
+        status: true,
+        code: true,
+        nameCostumer: true,
+        productOrder: {
+          select: {
+            id: true,
+            amount: true,
+            note: true,
+            product: {
+              select: {
+                id: true,
+                name: true,
+                imgCover: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return orders;
+  }
 }
 
 export default OrderService;
