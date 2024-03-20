@@ -8,6 +8,7 @@ import AddData from "./database/data";
 import resetarBancoDeDados from "./database/clearDatabase";
 import productRouter from "./routes/product.router";
 import productOrderRouter from "./routes/productOrder.router";
+import orderRouter from "./routes/order.router";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use("/clearDatabase", async (req, res) => {
 
 app.use("/products", productRouter);
 app.use("/productOrders", productOrderRouter);
+app.use("/orders", orderRouter);
 
 // app.use(HandleErrors.execute);
 
