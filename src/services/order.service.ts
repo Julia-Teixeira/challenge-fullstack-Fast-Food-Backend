@@ -92,6 +92,17 @@ class OrderService {
     });
     return orders;
   }
+  async alterOrderStatus(id: number, status: "onGoing" | "finished") {
+    const order = await this.repository.order.update({
+      where: {
+        id,
+      },
+      data: {
+        status: status,
+      },
+    });
+    return order;
+  }
 }
 
 export default OrderService;

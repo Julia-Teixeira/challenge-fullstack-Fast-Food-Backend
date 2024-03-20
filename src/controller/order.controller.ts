@@ -13,7 +13,12 @@ class OrderController {
     return response.json(orders).status(200);
   }
 
-  async updateOrder(request: Request, response: Response) {}
+  async updateOrder(request: Request, response: Response) {
+    const { id } = request.params;
+    const { status } = request.body;
+    const order = await orderService.alterOrderStatus(Number(id), status);
+    return response.json(order).status(200);
+  }
 }
 
 export default new OrderController();
