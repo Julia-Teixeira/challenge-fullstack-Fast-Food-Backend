@@ -3,13 +3,13 @@ import prisma from "../database/prisma";
 import { TProductOrder } from "../interface/productOrder.interface";
 
 class ProductOrderService {
-  private contactRepository: PrismaClient = prisma;
+  private repository: PrismaClient = prisma;
 
   async createProductOrder(data: TProductOrder) {
     let productOrder;
 
     if (!data.additionalIds) {
-      productOrder = await this.contactRepository.productOrder.create({
+      productOrder = await this.repository.productOrder.create({
         data: {
           note: data.note,
           amount: data.amount,
@@ -20,7 +20,7 @@ class ProductOrderService {
         },
       });
     } else {
-      productOrder = await this.contactRepository.productOrder.create({
+      productOrder = await this.repository.productOrder.create({
         data: {
           note: data.note,
           amount: data.amount,
