@@ -33,12 +33,12 @@ model Product {
 
   createdAt DateTime @default(now())
 
-  Additional Additional[]
+  additionalIds Additional[]
 
   category    Category @relation(fields: [category_id], references: [id])
-  category_id Int      @unique
+  category_id Int
 
-  ProductOrder ProductOrder[]
+  productOrder ProductOrder[]
 
   @@map("products")
 }
@@ -48,8 +48,8 @@ model Category {
   name     String @db.VarChar(128)
   imgCover String
 
-  createdAt DateTime @default(now())
-  Product   Product?
+  createdAt DateTime  @default(now())
+  product   Product[]
 
   @@map("categories")
 }
@@ -57,14 +57,14 @@ model Category {
 model Additional {
   id          Int             @id @default(autoincrement())
   name        String          @db.VarChar(128)
+  price       Decimal         @default(0)
   imgCover    String
   description String?
   type        AdditionalTypes
 
   createdAt DateTime @default(now())
 
-  Product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
+  product Product[]
 
   @@map("additional")
 }
@@ -93,7 +93,7 @@ model Order {
   code         Int
 
   productOrder ProductOrder[]
-  Payment      Payment[]
+  payment      Payment[]
 
   @@map("orders")
 }
