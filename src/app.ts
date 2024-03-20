@@ -6,6 +6,7 @@ import cors from "cors";
 import express, { json } from "express";
 import AddData from "./database/data";
 import resetarBancoDeDados from "./database/clearDatabase";
+import productRouter from "./routes/product.router";
 
 const app = express();
 
@@ -23,9 +24,7 @@ app.use("/clearDatabase", async (req, res) => {
   res.send("Dados limpos com sucesso!");
 });
 
-app.use("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use("/products", productRouter);
 
 // app.use(HandleErrors.execute);
 
