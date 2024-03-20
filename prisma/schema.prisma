@@ -16,6 +16,7 @@ enum AdditionalTypes {
 enum OrderStatus {
   onGoing
   finished
+  delivered
 }
 
 enum PaymentsTypes {
