@@ -22,9 +22,6 @@ async function resetarBancoDeDados() {
     await prisma.category.deleteMany();
     await prisma.additional.deleteMany();
 
-    // await prisma.$queryRaw`DELETE FROM categories RESTART WITH 1`;
-    // await prisma.$queryRaw`DELETE FROM categories;`;
-
     await prisma.$executeRaw`TRUNCATE TABLE categories RESTART IDENTITY CASCADE;`;
     await prisma.$executeRaw`TRUNCATE TABLE additional RESTART IDENTITY CASCADE;`;
 
