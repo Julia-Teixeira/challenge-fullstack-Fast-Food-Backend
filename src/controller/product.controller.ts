@@ -2,13 +2,18 @@ import { TProductService } from "../interface/product.interface";
 import ProductService from "../services/product.service";
 import { Request, Response } from "express";
 
-class ProductController {
-  productService: TProductService = new ProductService();
+const productService: TProductService = new ProductService();
 
+class ProductController {
   async getAllProducts(request: Request, response: Response) {
-    const productService: TProductService = new ProductService();
     const products = await productService.findAll();
     return response.json(products).status(200);
+  }
+
+  async getProductById(request: Request, response: Response) {
+    const { id } = request.params;
+    const product = await productService.findProductById(Number(id));
+    return response.json(product).status(200);
   }
 }
 
