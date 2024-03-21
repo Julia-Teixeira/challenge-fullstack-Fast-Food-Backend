@@ -2,7 +2,7 @@
 CREATE TYPE "AdditionalTypes" AS ENUM ('drink', 'souce', 'ingredient');
 
 -- CreateEnum
-CREATE TYPE "OrderStatus" AS ENUM ('onGoing', 'finished');
+CREATE TYPE "OrderStatus" AS ENUM ('onGoing', 'finished', 'delivered');
 
 -- CreateEnum
 CREATE TYPE "PaymentsTypes" AS ENUM ('debit', 'credit', 'inCash');
@@ -15,7 +15,7 @@ CREATE TABLE "products" (
     "description" TEXT,
     "imgCover" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "category_id" INTEGER NOT NULL,
+    "categoryId" INTEGER NOT NULL,
 
     CONSTRAINT "products_pkey" PRIMARY KEY ("id")
 );
@@ -92,7 +92,7 @@ CREATE UNIQUE INDEX "_AdditionalToProductOrder_AB_unique" ON "_AdditionalToProdu
 CREATE INDEX "_AdditionalToProductOrder_B_index" ON "_AdditionalToProductOrder"("B");
 
 -- AddForeignKey
-ALTER TABLE "products" ADD CONSTRAINT "products_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "products" ADD CONSTRAINT "products_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "productOrder" ADD CONSTRAINT "productOrder_productId_fkey" FOREIGN KEY ("productId") REFERENCES "products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

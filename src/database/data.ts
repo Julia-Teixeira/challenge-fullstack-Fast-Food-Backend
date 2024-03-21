@@ -63,7 +63,7 @@ async function AddData() {
           "https://catracalivre.com.br/wp-content/uploads/2015/03/lanche2.png",
         description:
           "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
-        category_id: 1,
+        categoryId: 1,
       },
       {
         name: "Smash da casa",
@@ -72,7 +72,7 @@ async function AddData() {
           "https://catracalivre.com.br/wp-content/uploads/2015/03/lanche2.png",
         description:
           "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
-        category_id: 1,
+        categoryId: 1,
       },
       {
         name: "Smash da casa",
@@ -81,7 +81,7 @@ async function AddData() {
           "https://catracalivre.com.br/wp-content/uploads/2015/03/lanche2.png",
         description:
           "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
-        category_id: 1,
+        categoryId: 1,
       },
     ],
   });

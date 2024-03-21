@@ -1,12 +1,7 @@
-interface TProduct {
-  id: number;
-  name: string;
-  price: number | any;
-  description: string | null;
-  imgCover: string;
-  createdAt: Date;
-  category_id: number;
-}
+import z from "zod";
+import ProductSchema from "../schema/product.schema";
+
+type TProduct = z.infer<typeof ProductSchema.productSchema>;
 
 interface TProductReturnById extends TProduct {
   additionalIds: number[];

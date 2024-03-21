@@ -10,12 +10,19 @@ import productRouter from "./routes/product.router";
 import productOrderRouter from "./routes/productOrder.router";
 import orderRouter from "./routes/order.router";
 import HandleErrors from "./middleware/handleError.middleware";
+import swaggerUi from "swagger-ui-express";
+import fs from "fs";
+import YAML from "yaml";
 
 const app = express();
 
 app.use(json());
 app.use(cors());
 app.use(helmet());
+
+const file = fs.readFileSync("./swagger.yaml", "utf8");
+const swaggerDocument = YAML.parse(file);
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/data", async (req, res) => {
   await AddData();
