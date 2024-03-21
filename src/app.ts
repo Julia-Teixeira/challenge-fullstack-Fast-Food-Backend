@@ -9,6 +9,7 @@ import resetarBancoDeDados from "./database/clearDatabase";
 import productRouter from "./routes/product.router";
 import productOrderRouter from "./routes/productOrder.router";
 import orderRouter from "./routes/order.router";
+import HandleErrors from "./middleware/handleError.middleware";
 
 const app = express();
 
@@ -30,6 +31,6 @@ app.use("/products", productRouter);
 app.use("/productOrders", productOrderRouter);
 app.use("/orders", orderRouter);
 
-// app.use(HandleErrors.execute);
+app.use(HandleErrors.execute);
 
 export default app;
