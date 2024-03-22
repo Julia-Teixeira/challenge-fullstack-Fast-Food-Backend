@@ -13,6 +13,7 @@ import HandleErrors from "./middleware/handleError.middleware";
 import swaggerUi from "swagger-ui-express";
 import fs from "fs";
 import YAML from "yaml";
+import categoriesRouter from "./routes/categories.router";
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/clearDatabase", async (req, res) => {
 app.use("/products", productRouter);
 app.use("/productOrders", productOrderRouter);
 app.use("/orders", orderRouter);
+app.use("/categories", categoriesRouter);
 
 app.use(HandleErrors.execute);
 
