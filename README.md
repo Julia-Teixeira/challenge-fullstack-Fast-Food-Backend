@@ -112,6 +112,43 @@ $ npm run dev ou yarn dev
 }
 
 ```
+### /categories
+
+`GET`
+
+#### Descrição: Retorna todas as categorias e seu respectivos produtos
+
+##### Responses
+
+| Código | Descrição |
+| ---- | ----------- |
+| 200 | Operação bem sucedida |
+
+`STATUS 200`
+```json
+[
+  {
+		"id": 1,
+		"name": "Combos",
+		"imgCover": "https://www.imagensempng.com.br/wp-content/uploads/2021/02/18-2.png",
+		"createdAt": "2024-03-21T13:22:19.090Z",
+		"product": [
+			{
+				"id": 1,
+				"name": "Smash da casa",
+				"price": "30.5",
+				"description": "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
+				"imgCover": "https://catracalivre.com.br/wp-content/uploads/2015/03/lanche2.png",
+				"createdAt": "2024-03-21T13:22:19.138Z",
+				"categoryId": 1
+			}
+    ]
+  }
+]
+
+```
+
+
 
 ### /productsOrders
 
