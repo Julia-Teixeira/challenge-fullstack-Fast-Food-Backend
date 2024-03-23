@@ -83,6 +83,22 @@ async function AddData() {
           "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
         categoryId: 1,
       },
+      {
+        name: "Coca-cola lata",
+        price: 6,
+        imgCover:
+          "https://giassi.vtexassets.com/arquivos/ids/644027/Refrigerante-Coca-Cola-Lata-350ml.png",
+        description: "Coca Cola Lata 350ml",
+        categoryId: 3,
+      },
+      {
+        name: "Pepsi 6",
+        price: 6,
+        imgCover:
+          "https://giassi.vtexassets.com/arquivos/ids/644052/Refrigerante-Cola-Pepsi-Lata-350ml.png",
+        description: "Pepsi Lata 350ml",
+        categoryId: 3,
+      },
     ],
   });
 }

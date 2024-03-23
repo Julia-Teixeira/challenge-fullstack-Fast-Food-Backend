@@ -45,6 +45,15 @@ class ProductOrderService {
 
     return productOrder;
   }
+
+  async deleteProductOrder(id: number) {
+    await this.repository.productOrder.delete({
+      where: {
+        id,
+      },
+    });
+    return null;
+  }
 }
 
 export default ProductOrderService;
