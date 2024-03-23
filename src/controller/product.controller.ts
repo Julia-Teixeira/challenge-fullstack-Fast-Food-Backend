@@ -1,8 +1,7 @@
-import { TProductService } from "../interface/product.interface";
 import ProductService from "../services/product.service";
 import { Request, Response } from "express";
 
-const productService: TProductService = new ProductService();
+const productService = new ProductService();
 
 class ProductController {
   async getAllProducts(request: Request, response: Response) {
@@ -14,6 +13,11 @@ class ProductController {
     const { id } = request.params;
     const product = await productService.findProductById(Number(id));
     return response.json(product).status(200);
+  }
+
+  async getAdditionalData(request: Request, response: Response) {
+    const additional = await productService.findAllAdditional();
+    return response.json(additional).status(200);
   }
 }
 

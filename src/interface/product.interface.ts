@@ -7,9 +7,4 @@ interface TProductReturnById extends TProduct {
   additionalIds: number[];
 }
 
-interface TProductService {
-  findAll: () => Promise<TProduct[]>;
-  findProductById: (id: number) => Promise<TProductReturnById>;
-}
-
-export { TProduct, TProductService, TProductReturnById };
+export { TProduct, TProductReturnById };

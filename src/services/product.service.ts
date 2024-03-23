@@ -16,6 +16,11 @@ class ProductService {
     });
     return product as unknown as TProductReturnById;
   }
+
+  async findAllAdditional() {
+    const additional = await this.repository.additional.findMany();
+    return additional;
+  }
 }
 
 export default ProductService;
