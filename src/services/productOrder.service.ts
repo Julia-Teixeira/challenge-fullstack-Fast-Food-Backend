@@ -18,6 +18,9 @@ class ProductOrderService {
             connect: { id: Number(data.productId) },
           },
         },
+        include: {
+          additionalIds: true,
+        },
       });
     } else {
       productOrder = await this.repository.productOrder.create({
@@ -25,10 +28,17 @@ class ProductOrderService {
           note: data.note,
           amount: data.amount,
           total: data.total,
-          additionalIds: data.additionalIds ? data.additionalIds : null,
           product: {
             connect: { id: Number(data.productId) },
           },
+          additionalIds: {
+            connect: data.additionalIds.map((id: number) => ({
+              id: Number(id),
+            })),
+          },
+        },
+        include: {
+          additionalIds: true,
         },
       });
     }
