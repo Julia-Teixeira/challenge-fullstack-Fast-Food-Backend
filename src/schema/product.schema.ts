@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import z from "zod";
 
-const productSchema = z.object({
+export const productSchema = z.object({
   id: z.number(),
   name: z.string(),
   price: z.instanceof(Prisma.Decimal),
@@ -11,4 +11,7 @@ const productSchema = z.object({
   createdAt: z.date(),
 });
 
-export default { productSchema };
+export const createProductSchema = productSchema.omit({
+  id: true,
+  createdAt: true,
+});

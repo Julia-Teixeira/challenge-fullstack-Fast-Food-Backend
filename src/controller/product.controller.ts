@@ -4,6 +4,10 @@ import { Request, Response } from "express";
 const productService = new ProductService();
 
 class ProductController {
+  async createProduct(request: Request, response: Response) {
+    const product = await productService.createProduct(request.body);
+    return response.json(product).status(201);
+  }
   async getAllProducts(request: Request, response: Response) {
     const products = await productService.findAll();
     return response.json(products).status(200);

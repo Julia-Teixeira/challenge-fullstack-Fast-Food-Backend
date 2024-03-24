@@ -1,10 +1,12 @@
 import z from "zod";
-import ProductSchema from "../schema/product.schema";
+import { productSchema } from "../schema/product.schema";
 
-type TProduct = z.infer<typeof ProductSchema.productSchema>;
+type TProduct = z.infer<typeof productSchema>;
 
 interface TProductReturnById extends TProduct {
   additionalIds: number[];
 }
 
-export { TProduct, TProductReturnById };
+type TCreateProduct = Omit<TProduct, "id" | "createdAt">;
+
+export { TProduct, TProductReturnById, TCreateProduct };
