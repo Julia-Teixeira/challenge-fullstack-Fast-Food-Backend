@@ -19,6 +19,12 @@ class OrderController {
     const order = await orderService.alterOrderStatus(Number(id), status);
     return response.json(order).status(200);
   }
+
+  async deleteOrder(request: Request, response: Response) {
+    const { id } = request.params;
+    await orderService.deleteOrder(Number(id));
+    return response.status(204).send();
+  }
 }
 
 export default new OrderController();

@@ -110,6 +110,15 @@ class OrderService {
     });
     return order;
   }
+
+  async deleteOrder(id: number) {
+    await this.repository.order.delete({
+      where: {
+        id,
+      },
+    });
+    return null;
+  }
 }
 
 export default OrderService;
