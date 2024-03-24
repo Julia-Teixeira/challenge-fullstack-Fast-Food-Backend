@@ -4,8 +4,6 @@ import "dotenv/config";
 import helmet from "helmet";
 import cors from "cors";
 import express, { json } from "express";
-import AddData from "./database/data";
-import resetarBancoDeDados from "./database/clearDatabase";
 import productRouter from "./routes/product.router";
 import productOrderRouter from "./routes/productOrder.router";
 import orderRouter from "./routes/order.router";
@@ -14,6 +12,7 @@ import swaggerUi from "swagger-ui-express";
 import fs from "fs";
 import YAML from "yaml";
 import categoriesRouter from "./routes/categories.router";
+import additionalRouter from "./routes/additional.router";
 
 const app = express();
 
@@ -25,17 +24,8 @@ const file = fs.readFileSync("./swagger.yaml", "utf8");
 const swaggerDocument = YAML.parse(file);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use("/data", async (req, res) => {
-  await AddData();
-  res.send("Dados cadastrados com sucesso!");
-});
-
-app.use("/clearDatabase", async (req, res) => {
-  await resetarBancoDeDados();
-  res.send("Dados limpos com sucesso!");
-});
-
 app.use("/products", productRouter);
+app.use("/additionals", additionalRouter);
 app.use("/productOrders", productOrderRouter);
 app.use("/orders", orderRouter);
 app.use("/categories", categoriesRouter);
