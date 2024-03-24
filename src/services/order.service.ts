@@ -79,6 +79,13 @@ class OrderService {
             id: true,
             amount: true,
             note: true,
+            additionalIds: {
+              select: {
+                id: true,
+                name: true,
+                description: true,
+              },
+            },
             product: {
               select: {
                 id: true,
