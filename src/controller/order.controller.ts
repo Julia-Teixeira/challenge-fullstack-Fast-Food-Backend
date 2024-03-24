@@ -13,6 +13,12 @@ class OrderController {
     return response.json(orders).status(200);
   }
 
+  async getOrderById(request: Request, response: Response) {
+    const { id } = request.params;
+    const order = await orderService.findOne(Number(id));
+    return response.json(order).status(200);
+  }
+
   async updateOrder(request: Request, response: Response) {
     const { id } = request.params;
     const { status } = request.body;

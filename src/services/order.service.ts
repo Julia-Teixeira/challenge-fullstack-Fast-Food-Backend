@@ -99,6 +99,55 @@ class OrderService {
     });
     return orders;
   }
+
+  async findOne(id: number) {
+    const order = await this.repository.order.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        status: true,
+        code: true,
+        nameCostumer: true,
+        createdAt: true,
+        total: true,
+        payment: {
+          select: {
+            id: true,
+            type: true,
+            change: true,
+            total: true,
+          },
+        },
+        productOrder: {
+          select: {
+            id: true,
+            amount: true,
+            note: true,
+            additionalIds: {
+              select: {
+                id: true,
+                name: true,
+                description: true,
+                price: true,
+              },
+            },
+            product: {
+              select: {
+                id: true,
+                name: true,
+                imgCover: true,
+                price: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return order;
+  }
+
   async alterOrderStatus(id: number, status: "onGoing" | "finished") {
     const order = await this.repository.order.update({
       where: {
