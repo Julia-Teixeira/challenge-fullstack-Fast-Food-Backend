@@ -6,6 +6,11 @@ class CategoriesController {
     const categories = await categoriesService.findAll();
     return response.json(categories).status(200);
   }
+
+  async createCategory(request: Request, response: Response) {
+    const category = await categoriesService.createCategory(request.body);
+    return response.json(category).status(201);
+  }
 }
 
 export default new CategoriesController();
