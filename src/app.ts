@@ -13,6 +13,7 @@ import fs from "fs";
 import YAML from "yaml";
 import categoriesRouter from "./routes/categories.router";
 import additionalRouter from "./routes/additional.router";
+const schema = require("../swagger.json");
 
 const app = express();
 
@@ -20,9 +21,9 @@ app.use(json());
 app.use(cors());
 app.use(helmet());
 
-const file = fs.readFileSync("swagger.yaml", "utf8");
-const swaggerDocument = YAML.parse(file);
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// const file = fs.readFileSync("../swagger.yaml", "utf8");
+const swaggerDocument = schema;
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/products", productRouter);
 app.use("/additionals", additionalRouter);
