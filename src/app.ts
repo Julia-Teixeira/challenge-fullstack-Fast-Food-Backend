@@ -20,7 +20,7 @@ app.use(json());
 app.use(cors());
 app.use(helmet());
 
-const file = fs.readFileSync("../swagger.yaml", "utf8");
+const file = fs.readFileSync("swagger.yaml", "utf8");
 const swaggerDocument = YAML.parse(file);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
