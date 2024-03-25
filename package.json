@@ -7,7 +7,7 @@
     "dev": "tsnd --ignore-watch node_modules --cls --rs src/server.ts",
     "prepare": "husky",
     "migrate": "npx prisma migrate dev",
-    "vercel-build": "npx prisma migrate deploy"
+    "vercel-build": "npx prisma migrate dev"
   },
   "author": "Julia Pereira Teixeira",
   "license": "ISC",
