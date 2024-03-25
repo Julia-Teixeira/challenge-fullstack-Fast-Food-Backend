@@ -12,7 +12,7 @@
   </a>
 </p>
 
-# Fast Food API
+# Desafio da empresa Devio - Fast Food API
 A API de Fast Food foi desenvolvida para atender às necessidades de um restaurante que oferece comidas rápidas, permitindo que registrem suas vendas de forma fácil e rápida, substituindo o método tradicional de comandas por um processo mais eficiente. Este serviço oferece uma interface intuitiva para listar os produtos mais vendidos e facilitar a inserção desses produtos no checkout. Além disso, a API proporciona um visual simples e moderno, garantindo uma experiência de usuário agradável.
 
 ## 🚀 Como executar o projeto
@@ -561,3 +561,6 @@ As seguintes ferramentas foram usadas na construção do projeto:
 -   **[PostgreSQL](https://www.postgresql.org/)**
 
 > Veja o arquivo  [package.json](https://github.com/Julia-Teixeira/challenge-fullstack-Fast-Food-Backend/blob/main/package.json)
+
+## Link do desafio
+**[Desafio Fullstack Devio]https://github.com/deviobr/challenges/blob/main/challenge-fullstack.md
