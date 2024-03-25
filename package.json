@@ -9,7 +9,7 @@
     "start": "node dist/server.js",
     "prepare": "husky",
     "migrate": "npx prisma migrate dev",
-    "vercel-build": "npx prisma migrate dev"
+    "vercel-build": "npx tsc && prisma migrate dev"
   },
   "author": "Julia Pereira Teixeira",
   "license": "ISC",
