@@ -118,7 +118,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/category'
+                $ref: '#/components/schemas/categoryCreateResponse'
     get:
       tags:
         - category
@@ -654,6 +654,23 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/product'
+    categoryCreateResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Combos
+        imgCover:
+          type: string
+          example: "https://fastfood.com/image.png"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2022-01-01T00:00:00.000Z"
     categoryRequest:
       type: object
       required:
