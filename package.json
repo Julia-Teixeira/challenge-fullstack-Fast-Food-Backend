@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A API de Fast Food foi desenvolvida para atender às necessidades de um restaurante que oferece comidas rápidas, permitindo que registrem suas vendas de forma fácil e rápida, substituindo o método tradicional de comandas por um processo mais eficiente. Este serviço oferece uma interface intuitiva para listar os produtos mais vendidos e facilitar a inserção desses produtos no checkout. Além disso, a API proporciona um visual simples e moderno, garantindo uma experiência de usuário agradável.",
   "main": "index.js",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "tsnd --ignore-watch node_modules --cls --rs src/server.ts",
     "build": "npx tsc",
