@@ -47,7 +47,7 @@ $ npm run dev ou yarn dev
 ### /products
 
 `GET`
-#### Descrição: Retorna todos os productsOrders
+#### Descrição: Retorna todos os produtos
 
 ##### Respostas
 
@@ -59,8 +59,8 @@ $ npm run dev ou yarn dev
 
 `STATUS 200`
 ```json
-
-{
+[
+  {
     "id": 10,
     "name": "Smash da casa",
     "price": "30.5",
@@ -68,21 +68,84 @@ $ npm run dev ou yarn dev
     "image": "https://fastfood.com/image.png",
     "categoryId": 1,
     "createdAt": "2022-01-01T00:00:00.000Z"
+  }
+]
+```
+
+`POST`
+#### Descrição: Cria um novo produto
+
+##### Respostas
+
+| Code | Description |
+| ---- | ----------- |
+| 201 | Criado com sucesso |
+
+#### Request
+
+```json
+{
+  "name": "Smash da casa",
+  "price": 30.5,
+  "description": "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
+  "imgCover": "https://fastfood.com/image.png",
+  "categoryId": 1
 }
+```
+
+#### Response
+`STATUS 201`
+
+```json
+{
+  "id": 10,
+  "name": "Smash da casa",
+  "price": "30.5",
+  "description": "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
+  "image": "https://fastfood.com/image.png",
+  "categoryId": 1,
+  "createdAt": "2022-01-01T00:00:00.000Z"
+}
+```
 
 
+### /products/additional
+`GET`
+
+#### Descrição: Retorna todos adicionas dos produtos
+
+##### Respostas
+
+| Código | Descrição |
+| ---- | ----------- |
+| 200 | Operação bem sucedida |
+
+##### Responses
+`STATUS 200`
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Bacon",
+    "price": "1",
+    "type": "ingredient",
+    "description": "10g",
+    "imgCover": "https://fastfood.com/image.png",
+    "createdAt": "2022-01-01T00:00:00.000Z"
+  }
+]
 ```
 
 ### /products/{id}
-
-`GET`
-#### Descrição: Recuperar o produto por id
-
 ##### Parâmetros
 
 | Nome | Localizado em | Descrição | Requerido | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
 | id | path | ID do produto para retornar | Yes | number |
+
+`GET`
+#### Descrição: Recuperar o produto por id
 
 ##### Responses
 
@@ -112,14 +175,14 @@ $ npm run dev ou yarn dev
 }
 
 ```
-### /categories
+
+
+### /additionals
 
 `GET`
-
-#### Descrição: Retorna todas as categorias e seu respectivos produtos
+#### Descrição: Retorna todas os adicionais
 
 ##### Responses
-
 | Código | Descrição |
 | ---- | ----------- |
 | 200 | Operação bem sucedida |
@@ -128,27 +191,110 @@ $ npm run dev ou yarn dev
 ```json
 [
   {
-	"id": 1,
-	"name": "Combos",
-	"imgCover": "https://www.imagensempng.com.br/wp-content/uploads/2021/02/18-2.png",
-	"createdAt": "2024-03-21T13:22:19.090Z",
-	"product": [
-		{
-			"id": 1,
-			"name": "Smash da casa",
-			"price": "30.5",
-			"description": "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
-			"imgCover": "https://catracalivre.com.br/wp-content/uploads/2015/03/lanche2.png",
-			"createdAt": "2024-03-21T13:22:19.138Z",
-			"categoryId": 1
-		}
-        ]
+    "id": 1,
+    "name": "Bacon",
+    "price": "1",
+    "type": "ingredient",
+    "description": "10g",
+    "imgCover": "https://fastfood.com/image.png",
+    "createdAt": "2022-01-01T00:00:00.000Z"
   }
 ]
-
 ```
 
+`POST`
+#### Descrição: Cria um novo adicional no banco de dados
 
+##### Responses
+| Código | Descrição |
+| ---- | ----------- |
+| 200 | Operação bem sucedida |
+
+#### Request
+```json
+{
+  "name": "Bacon",
+  "price": "1",
+  "type": "ingredient",
+  "description": "10g",
+  "imgCover": "https://fastfood.com/image.png"
+}
+```
+
+#### Response
+`STATUS 201`
+```json
+{
+  "id": 1,
+  "name": "Bacon",
+  "price": "1",
+  "type": "ingredient",
+  "description": "10g",
+  "imgCover": "https://fastfood.com/image.png",
+  "createdAt": "2022-01-01T00:00:00.000Z"
+}
+```
+
+### /categories
+
+`GET`
+#### Descrição: Retorna todas as categorias e seu respectivos produtos
+
+##### Responses
+| Código | Descrição |
+| ---- | ----------- |
+| 200 | Operação bem sucedida |
+
+`STATUS 200`
+```json
+[
+  {
+    "id": 1,
+    "name": "Combos",
+    "imgCover": "https://fastfood.com/image.png",
+    "createdAt": "2022-01-01T00:00:00.000Z",
+    "product": [
+      {
+        "id": 10,
+        "name": "Smash da casa",
+        "price": "30.5",
+        "description": "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
+        "image": "https://fastfood.com/image.png",
+        "categoryId": 1,
+        "createdAt": "2022-01-01T00:00:00.000Z"
+      }
+    ]
+  }
+]
+```
+
+`POST`
+#### Descrição: Criar uma nova categoria no banco de dados
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 201 | Criado com sucesso |
+
+#### Request
+```json
+{
+  "name": "Combos",
+  "imgCover": "https://fastfood.com/image.png"
+}
+```
+
+#### Response
+`STATUS 201`
+```json
+{
+  "id": 1,
+  "name": "Combos",
+  "imgCover": "https://fastfood.com/image.png",
+  "createdAt": "2022-01-01T00:00:00.000Z"
+}
+```
 
 ### /productsOrders
 
@@ -158,9 +304,9 @@ $ npm run dev ou yarn dev
 
 ##### Responses
 
-| Código | Descrição |
+| Code | Description |
 | ---- | ----------- |
-| 200 | Operação bem sucedida |
+| 201 | Criado com sucesso |
 
 #### Request
 ```json
@@ -174,7 +320,7 @@ $ npm run dev ou yarn dev
 
 #### Response
 
-`STATUS 200`
+`STATUS 201`
 ```json
 {
   "id": 10,
@@ -185,6 +331,22 @@ $ npm run dev ou yarn dev
   "createdAt": "2022-01-01T00:00:00.000Z"
 }
 ```
+
+### /productsOrders/{id}
+##### Parâmetros
+
+| Nome | Localizado em | Descrição | Requerido | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| id | path | ID do productOrder a ser excluído | Yes | number |
+
+`DELETE`
+#### Descrição: Apaga um productOrder do banco de dados
+
+##### Responses
+
+| Código | Descrição |
+| ---- | ----------- |
+| 204 | Sem corpo |
 
 ### /orders
 
@@ -205,16 +367,34 @@ $ npm run dev ou yarn dev
     "status": "finished",
     "code": 200,
     "nameCostumer": "Julieta",
+    "total": "30.5",
     "createdAt": "2022-01-01T00:00:00.000Z",
+    "payment": [
+      {
+        "id": 1,
+        "type": "credit",
+        "change": "0",
+        "total": "30.5"
+      }
+    ],
     "productOrder": [
       {
         "id": 1,
         "amount": 1,
         "note": "Sem cebola",
+        "additionalIds": [
+          {
+            "id": 1,
+            "name": "Bacon",
+            "price": "10.5",
+            "description": "10g"
+          }
+        ],
         "product": {
           "id": 1,
           "name": "Smash da casa",
-          "imgCover": "https://fastfood.com/image.png"
+          "imgCover": "https://fastfood.com/image.png",
+          "price": "30.5"
         }
       }
     ]
@@ -229,7 +409,7 @@ $ npm run dev ou yarn dev
 
 | Code | Description |
 | ---- | ----------- |
-| 200 | Operação bem sucedida |
+| 201 | Criado com sucesso |
 
 #### Request
 ```json
@@ -250,7 +430,7 @@ $ npm run dev ou yarn dev
 
 #### Response
 
-`STATUS 200`
+`STATUS 201`
 ```json
 {
   "id": 10,
@@ -264,15 +444,65 @@ $ npm run dev ou yarn dev
 
 ### /orders/{id}
 
-`PATCH`
-
-#### Description: Atualizar o estado de um pedido
-
 ##### Parameters
 
 | Name | Localizado em | Descrição | Requirido | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
-| id | path | ID do pedido para atualizar | Yes | long |
+| id | path | ID do pedido | Yes | long |
+
+`GET`
+#### Description: Retorna uma pedido
+
+##### Responses
+
+| Código | Descrição |
+| ---- | ----------- |
+| 200 | Successful operation |
+| 404 | Order not found |
+
+#### Response
+```json
+{
+  "id": 10,
+  "status": "finished",
+  "code": 200,
+  "nameCostumer": "Julieta",
+  "total": "30.5",
+  "createdAt": "2022-01-01T00:00:00.000Z",
+  "payment": [
+    {
+      "id": 1,
+      "type": "credit",
+      "change": "0",
+      "total": "30.5"
+    }
+  ],
+  "productOrder": [
+    {
+      "id": 1,
+      "amount": 1,
+      "note": "Sem cebola",
+      "additionalIds": [
+        {
+          "id": 1,
+          "name": "Bacon",
+          "price": "10.5",
+          "description": "10g"
+        }
+      ],
+      "product": {
+        "id": 1,
+        "name": "Smash da casa",
+        "imgCover": "https://fastfood.com/image.png",
+        "price": "30.5"
+      }
+    }
+  ]
+}
+```
+
+`PATCH`
+#### Description: Atualizar o estado de um pedido
 
 ##### Responses
 
@@ -290,7 +520,6 @@ $ npm run dev ou yarn dev
 ```
 
 #### Response
-
 `STATUS 200`
 ```json
 {
@@ -308,8 +537,18 @@ $ npm run dev ou yarn dev
 {
     message: "Order not found"
 }
-
 ```
+
+`DELETE`
+#### Description: Apaga um pedido do banco de dados
+
+##### Responses
+
+| Código | Descrição |
+| ---- | ----------- |
+| 204 | Sem corpo |
+
+
 
 ## 🛠 Tecnologias
 
