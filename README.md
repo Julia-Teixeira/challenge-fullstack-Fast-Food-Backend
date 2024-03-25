@@ -563,4 +563,4 @@ As seguintes ferramentas foram usadas na construção do projeto:
 > Veja o arquivo  [package.json](https://github.com/Julia-Teixeira/challenge-fullstack-Fast-Food-Backend/blob/main/package.json)
 
 ## Link do desafio
-**[Desafio Fullstack Devio]https://github.com/deviobr/challenges/blob/main/challenge-fullstack.md
+- **[Desafio Fullstack Devio](https://github.com/deviobr/challenges/blob/main/challenge-fullstack.md)
