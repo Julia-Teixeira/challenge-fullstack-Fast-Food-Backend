@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AdditionalTypes {
+  drink
+  souce
+  ingredient
+}
+
+enum OrderStatus {
+  onGoing
+  finished
+  delivered
+}
+
+enum PaymentsTypes {
+  debit
+  credit
+  inCash
+}
+
+model Product {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(128)
+  price       Decimal @default(0.0)
+  description String?
+  imgCover    String
+
+  createdAt DateTime @default(now())
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+
+  productOrder ProductOrder[]
+
+  @@map("products")
+}
+
+model Category {
+  id       Int    @id @default(autoincrement())
+  name     String @unique @db.VarChar(128)
+  imgCover String
+
+  createdAt DateTime  @default(now())
+  product   Product[]
+
+  @@map("categories")
+}
+
+model Additional {
+  id          Int             @id @default(autoincrement())
+  name        String          @unique @db.VarChar(128)
+  price       Decimal         @default(0)
+  imgCover    String
+  description String?
+  type        AdditionalTypes
+
+  createdAt DateTime @default(now())
+
+  productOrder ProductOrder[]
+
+  @@map("additional")
+}
+
+model ProductOrder {
+  id            Int          @id @default(autoincrement())
+  amount        Int          @default(1)
+  note          String
+  additionalIds Additional[]
+  total         Decimal      @default(0)
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+
+  Order   Order? @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId Int?
+
+  @@map("productOrder")
+}
+
+model Order {
+  id           Int         @id @default(autoincrement())
+  createdAt    DateTime    @default(now())
+  total        Decimal     @default(0.0)
+  nameCostumer String?     @db.VarChar(128)
+  status       OrderStatus
+  code         Int?
+
+  productOrder ProductOrder[]
+  payment      Payment[]
+
+  @@map("orders")
+}
+
+model Payment {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  change    Decimal  @default(0.0)
+  total     Decimal  @default(0.0)
+
+  type PaymentsTypes
+
+  orderId Int
+  Order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
