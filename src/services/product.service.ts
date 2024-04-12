@@ -1,7 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import prisma from "../database/prisma";
 import {
+  PaginateOptions,
   TCreateProduct,
+  TPaginatedResult,
   TProduct,
   TProductReturnById,
 } from "../interface/product.interface";
@@ -26,25 +28,48 @@ class ProductService {
     return product;
   }
 
-  async findAll(category?: string): Promise<TProduct[]> {
+  async findAll(
+    category?: string,
+    options?: PaginateOptions,
+  ): Promise<TPaginatedResult> {
+    const page = Number(options?.page) || 1;
+    const perPage = Number(options?.perPage) || 10;
+    const skip = page > 0 ? perPage * (page - 1) : 0;
     let products;
     if (category) {
       products = await this.repository.product.findMany({
         where: {
           category: { name: { equals: category, mode: "insensitive" } },
         },
-        skip: 0,
-        take: 20,
+        skip,
+        take: perPage,
+        orderBy: {
+          id: "asc",
+        },
       });
     } else {
       products = await this.repository.product.findMany({
-        skip: 0,
-        take: 20,
+        skip,
+        take: perPage,
+        orderBy: {
+          id: "asc",
+        },
       });
     }
+    const totalProduts = await this.repository.product.count();
+    const lastPage = Math.ceil(totalProduts / perPage);
 
-    console.log(products);
-    return products;
+    const response = {
+      totalProduts,
+      lastPage,
+      currentPage: page,
+      perPage,
+      prev: page > 1 ? page - 1 : null,
+      next: page < lastPage ? page + 1 : null,
+      products,
+    };
+
+    return response;
   }
 
   async findProductById(id: number): Promise<TProductReturnById> {

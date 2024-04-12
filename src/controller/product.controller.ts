@@ -11,6 +11,9 @@ class ProductController {
   async getAllProducts(request: Request, response: Response) {
     const products = await productService.findAll(
       request.query.category as string,
+      {
+        page: Number(request.query.page) || 1,
+      },
     );
     return response.json(products).status(200);
   }
