@@ -1,10 +1,64 @@
 import { PrismaClient } from "@prisma/client";
 import prisma from "../database/prisma";
+import { TCreateOrder } from "../interface/order.interface";
+import AppError from "../error/app.error";
 
 class OrderService {
   private repository: PrismaClient = prisma;
 
-  async createOrder(data: any) {
+  async createOrder(data: TCreateOrder) {
+    const productOrder = data.productOrder;
+    const productsOrderObject = await Promise.all(
+      productOrder.map(async (id: number) => {
+        const productOrder = await this.repository.productOrder.findUnique({
+          where: { id },
+          include: {
+            product: { select: { id: true, price: true } },
+            additionalIds: true,
+          },
+        });
+        return {
+          id,
+          amount: productOrder!.amount,
+          total: productOrder!.total,
+          productPrice: productOrder!.product.price,
+          totalAdditionals: productOrder!.additionalIds.reduce(
+            (acc, curr) => acc + Number(curr.price),
+            0,
+          ),
+        };
+      }),
+    );
+    const TOTAL = productsOrderObject.reduce(
+      (acc, curr) => acc + (Number(curr.productPrice) + curr.totalAdditionals),
+      0,
+    );
+
+    if (TOTAL !== data.total) {
+      throw new AppError(
+        "Total do pedido não confere, o total deve ser igual a: " + TOTAL,
+        400,
+      );
+    }
+
+    if (data.payment.total < TOTAL) {
+      throw new AppError(
+        "Total do pagamento do pedido é menor que o esperado, o total deve ser maior ou igual a: " +
+          TOTAL,
+      );
+    }
+
+    if (data.payment.total > TOTAL) {
+      const change = data.payment.total - TOTAL;
+
+      if (data.payment.change !== change) {
+        throw new AppError(
+          "O troco do pedido é diferente do que o esperado, o troco deve ser igual a: " +
+            change,
+        );
+      }
+    }
+
     const order = await this.repository.order.create({
       data: {
         status: "onGoing",
