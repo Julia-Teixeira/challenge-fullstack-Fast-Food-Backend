@@ -26,8 +26,24 @@ class ProductService {
     return product;
   }
 
-  async findAll(): Promise<TProduct[]> {
-    const products = await this.repository.product.findMany({});
+  async findAll(category?: string): Promise<TProduct[]> {
+    let products;
+    if (category) {
+      products = await this.repository.product.findMany({
+        where: {
+          category: { name: { equals: category, mode: "insensitive" } },
+        },
+        skip: 0,
+        take: 20,
+      });
+    } else {
+      products = await this.repository.product.findMany({
+        skip: 0,
+        take: 20,
+      });
+    }
+
+    console.log(products);
     return products;
   }
 

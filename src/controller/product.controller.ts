@@ -9,7 +9,9 @@ class ProductController {
     return response.json(product).status(201);
   }
   async getAllProducts(request: Request, response: Response) {
-    const products = await productService.findAll();
+    const products = await productService.findAll(
+      request.query.category as string,
+    );
     return response.json(products).status(200);
   }
 
