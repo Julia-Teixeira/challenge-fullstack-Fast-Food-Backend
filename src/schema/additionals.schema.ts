@@ -4,7 +4,7 @@ import z from "zod";
 export const additionalSchema = z.object({
   id: z.number(),
   name: z.string(),
-  price: z.instanceof(Prisma.Decimal),
+  price: z.instanceof(Prisma.Decimal).or(z.number()),
   imgCover: z.string(),
   type: z.enum(["ingredient", "souce", "drink"]),
   description: z.string().nullish(),

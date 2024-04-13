@@ -8,7 +8,11 @@ class AdditionalController {
   }
 
   async getAll(request: Request, response: Response) {
-    const additionals = await additionalsService.findAll();
+    const options = {
+      page: Number(request.query.page) || 1,
+      perPage: Number(request.query.perPage) || 20,
+    };
+    const additionals = await additionalsService.findAll(options);
     return response.json(additionals).status(200);
   }
 }
