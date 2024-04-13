@@ -1,3 +1,4 @@
+import { TAdditional, TCreateAdditional } from "./additional.interface";
 import { TCategory, TCreateCategory } from "./category.interface";
 import { PaginateOptions, TPaginatedResult } from "./pagination.interface";
 import {
@@ -17,5 +18,10 @@ export interface TProductRepository {
 
 export interface TCategoryRepository {
   create(data: TCreateCategory): Promise<TCategory>;
-  findAll(): Promise<TPaginatedResult<TCategory>>;
+  findAll(options?: PaginateOptions): Promise<TPaginatedResult<TCategory>>;
+}
+
+export interface TAdditionalRepository {
+  create(data: TCreateAdditional): Promise<TAdditional>;
+  findAll(options?: PaginateOptions): Promise<TPaginatedResult<TAdditional>>;
 }
