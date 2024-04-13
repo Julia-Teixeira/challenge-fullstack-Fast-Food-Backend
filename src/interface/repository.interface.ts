@@ -1,5 +1,11 @@
 import { TAdditional, TCreateAdditional } from "./additional.interface";
 import { TCategory, TCreateCategory } from "./category.interface";
+import {
+  TCreateOrder,
+  TOrder,
+  TOrderReturn,
+  TReturnCreateOrder,
+} from "./order.interface";
 import { PaginateOptions, TPaginatedResult } from "./pagination.interface";
 import {
   TCreateProduct,
@@ -24,4 +30,15 @@ export interface TCategoryRepository {
 export interface TAdditionalRepository {
   create(data: TCreateAdditional): Promise<TAdditional>;
   findAll(options?: PaginateOptions): Promise<TPaginatedResult<TAdditional>>;
+}
+
+export interface TOrderRepository {
+  create(data: TCreateOrder): Promise<TReturnCreateOrder>;
+  findAll(): Promise<TOrderReturn[]>;
+  findOne(id: number): Promise<TOrderReturn>;
+  alterStatus(
+    id: number,
+    status: "onGoing" | "finished",
+  ): Promise<TReturnCreateOrder>;
+  delete(id: number): Promise<void>;
 }
