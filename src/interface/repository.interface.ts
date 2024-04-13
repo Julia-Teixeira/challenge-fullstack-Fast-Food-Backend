@@ -1,18 +1,21 @@
-import { TAdditional } from "./additional.interface";
+import { TCategory, TCreateCategory } from "./category.interface";
+import { PaginateOptions, TPaginatedResult } from "./pagnation.interface";
 import {
-  PaginateOptions,
   TCreateProduct,
-  TPaginatedResult,
   TProduct,
   TProductReturnById,
 } from "./product.interface";
 
 export interface TProductRepository {
-  createProduct(data: TCreateProduct): Promise<TProduct>;
+  create(data: TCreateProduct): Promise<TProduct>;
   findAll(
     category?: string,
     options?: PaginateOptions,
-  ): Promise<TPaginatedResult>;
+  ): Promise<TPaginatedResult<TProduct>>;
   findById(id: number): Promise<TProductReturnById>;
-  findAdditional(): Promise<TAdditional[]>;
+}
+
+export interface TCategoryRepository {
+  create(data: TCreateCategory): Promise<TCategory>;
+  findAll(): Promise<TPaginatedResult<TCategory>>;
 }
