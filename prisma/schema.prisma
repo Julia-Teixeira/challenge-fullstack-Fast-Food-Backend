@@ -88,9 +88,9 @@ model Order {
   id           Int         @id @default(autoincrement())
   createdAt    DateTime    @default(now())
   total        Decimal     @default(0.0)
-  nameCostumer String?     @db.VarChar(128)
+  nameCostumer String      @db.VarChar(128)
   status       OrderStatus
-  code         Int?
+  code         Int
 
   productOrder ProductOrder[]
   payment      Payment[]
