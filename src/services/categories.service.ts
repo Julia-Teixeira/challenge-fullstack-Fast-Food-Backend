@@ -1,6 +1,6 @@
 import { TCategory, TCreateCategory } from "../interface/category.interface";
-import categoryRepository from "../database/repository/category.repository";
-import { TPaginatedResult } from "../interface/pagnation.interface";
+import { categoryRepository } from "../database/";
+import { TPaginatedResult } from "../interface/pagination.interface";
 
 class CategoriesService {
   async create(data: TCreateCategory): Promise<TCategory> {
