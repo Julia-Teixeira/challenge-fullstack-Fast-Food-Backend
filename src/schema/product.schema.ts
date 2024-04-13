@@ -4,7 +4,7 @@ import z from "zod";
 export const productSchema = z.object({
   id: z.number(),
   name: z.string(),
-  price: z.instanceof(Prisma.Decimal),
+  price: z.number().or(z.instanceof(Prisma.Decimal)),
   description: z.string().nullish(),
   imgCover: z.string(),
   categoryId: z.number(),
