@@ -23,11 +23,6 @@ class ProductController {
     const product = await productService.findProductById(Number(id));
     return response.json(product).status(200);
   }
-
-  async getAdditionalData(request: Request, response: Response) {
-    const additional = await productService.findAllAdditional();
-    return response.json(additional).status(200);
-  }
 }
 
 const productController = new ProductController();

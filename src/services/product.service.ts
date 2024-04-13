@@ -8,7 +8,7 @@ import { productRepository } from "../database/";
 
 class ProductService {
   async createProduct(data: TCreateProduct) {
-    return await productRepository.createProduct(data);
+    return await productRepository.create(data);
   }
 
   async findAll(
@@ -20,10 +20,6 @@ class ProductService {
 
   async findProductById(id: number): Promise<TProductReturnById> {
     return await productRepository.findById(id);
-  }
-
-  async findAllAdditional() {
-    return await productRepository.findAdditional();
   }
 }
 

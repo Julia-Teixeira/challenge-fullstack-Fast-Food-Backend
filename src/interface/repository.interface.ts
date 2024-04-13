@@ -1,5 +1,5 @@
 import { TCategory, TCreateCategory } from "./category.interface";
-import { PaginateOptions, TPaginatedResult } from "./pagnation.interface";
+import { PaginateOptions, TPaginatedResult } from "./pagination.interface";
 import {
   TCreateProduct,
   TProduct,
