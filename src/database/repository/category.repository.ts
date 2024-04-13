@@ -5,7 +5,7 @@ import { TCategoryRepository } from "../../interface/repository.interface";
 import {
   PaginateOptions,
   TPaginatedResult,
-} from "../../interface/product.interface";
+} from "../../interface/pagination.interface";
 
 class CategotyRepository implements TCategoryRepository {
   private repository: PrismaClient = prisma;
