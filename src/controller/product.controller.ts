@@ -13,6 +13,7 @@ class ProductController {
       request.query.category as string,
       {
         page: Number(request.query.page) || 1,
+        perPage: Number(request.query.perPage) || 20,
       },
     );
     return response.json(products).status(200);

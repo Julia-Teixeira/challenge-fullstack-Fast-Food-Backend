@@ -1,10 +1,13 @@
 import {
-  PaginateOptions,
   TCreateProduct,
-  TPaginatedResult,
+  TProduct,
   TProductReturnById,
 } from "../interface/product.interface";
 import { productRepository } from "../database/";
+import {
+  PaginateOptions,
+  TPaginatedResult,
+} from "../interface/pagination.interface";
 
 class ProductService {
   async createProduct(data: TCreateProduct) {
@@ -14,7 +17,7 @@ class ProductService {
   async findAll(
     category?: string,
     options?: PaginateOptions,
-  ): Promise<TPaginatedResult> {
+  ): Promise<TPaginatedResult<TProduct>> {
     return await productRepository.findAll(category, options);
   }
 
