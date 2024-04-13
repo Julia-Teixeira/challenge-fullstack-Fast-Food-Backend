@@ -9,8 +9,9 @@ import {
   TPaginatedResult,
 } from "../../interface/pagination.interface";
 import AppError from "../../error/app.error";
+import { TAdditionalRepository } from "../../interface/repository.interface";
 
-class AdditionalRepository {
+class AdditionalRepository implements TAdditionalRepository {
   private repository: PrismaClient = prisma;
 
   async create(data: TCreateAdditional): Promise<TAdditional> {
