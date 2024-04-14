@@ -39,7 +39,8 @@ class OrderRepository implements TOrderRepository {
       }),
     );
     const TOTAL = productsOrderObject.reduce(
-      (acc, curr) => acc + (Number(curr.productPrice) + curr.totalAdditionals),
+      (acc, curr) =>
+        acc + (Number(curr.productPrice) * curr.amount + curr.totalAdditionals),
       0,
     );
 
@@ -131,56 +132,113 @@ class OrderRepository implements TOrderRepository {
 
   async findAll(
     options?: PaginateOptions,
+    status?: "onGoing" | "finished" | "delivered",
   ): Promise<TPaginatedResult<TOrderReturn>> {
+    const query = status ? status : undefined;
     const page = Number(options?.page) || 1;
     const perPage = Number(options?.perPage) || 20;
     const skip = page > 0 ? perPage * (page - 1) : 0;
-    const orders = await this.repository.order.findMany({
-      skip,
-      take: perPage,
-      orderBy: {
-        id: "asc",
-      },
-      select: {
-        id: true,
-        status: true,
-        code: true,
-        nameCostumer: true,
-        total: true,
-        createdAt: true,
-        productOrder: {
-          select: {
-            id: true,
-            amount: true,
-            note: true,
-            total: true,
-            additionalIds: {
-              select: {
-                id: true,
-                name: true,
-                description: true,
-                price: true,
+
+    let orders;
+
+    if (!query) {
+      orders = await this.repository.order.findMany({
+        skip,
+        take: perPage,
+        orderBy: {
+          id: "asc",
+        },
+        select: {
+          id: true,
+          status: true,
+          code: true,
+          nameCostumer: true,
+          total: true,
+          createdAt: true,
+          productOrder: {
+            select: {
+              id: true,
+              amount: true,
+              note: true,
+              total: true,
+              additionalIds: {
+                select: {
+                  id: true,
+                  name: true,
+                  description: true,
+                  price: true,
+                },
               },
-            },
-            product: {
-              select: {
-                id: true,
-                name: true,
-                imgCover: true,
-                price: true,
+              product: {
+                select: {
+                  id: true,
+                  name: true,
+                  imgCover: true,
+                  price: true,
+                },
               },
             },
           },
-        },
-        payment: {
-          select: {
-            type: true,
-            change: true,
-            total: true,
+          payment: {
+            select: {
+              type: true,
+              change: true,
+              total: true,
+            },
           },
         },
-      },
-    });
+      });
+    } else {
+      orders = await this.repository.order.findMany({
+        skip,
+        take: perPage,
+        orderBy: {
+          id: "asc",
+        },
+        select: {
+          id: true,
+          status: true,
+          code: true,
+          nameCostumer: true,
+          total: true,
+          createdAt: true,
+          productOrder: {
+            select: {
+              id: true,
+              amount: true,
+              note: true,
+              total: true,
+              additionalIds: {
+                select: {
+                  id: true,
+                  name: true,
+                  description: true,
+                  price: true,
+                },
+              },
+              product: {
+                select: {
+                  id: true,
+                  name: true,
+                  imgCover: true,
+                  price: true,
+                },
+              },
+            },
+          },
+          payment: {
+            select: {
+              type: true,
+              change: true,
+              total: true,
+            },
+          },
+        },
+        where: {
+          status: query,
+        },
+      });
+    }
 
     const totalOrders = await this.repository.order.count();
     const lastPage = Math.ceil(totalOrders / perPage);

@@ -13,7 +13,13 @@ class OrderController {
       page: Number(request.query.page) || 1,
       perPage: Number(request.query.perPage) || 30,
     };
-    const orders = await orderService.findAll(options);
+    const query = request.query.status as
+      | "onGoing"
+      | "finished"
+      | "delivered"
+      | undefined;
+
+    const orders = await orderService.findAll(options, query);
     return response.json(orders).status(200);
   }
 

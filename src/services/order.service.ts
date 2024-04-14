@@ -17,8 +17,9 @@ class OrderService {
 
   async findAll(
     options?: PaginateOptions,
+    status?: "onGoing" | "finished" | "delivered",
   ): Promise<TPaginatedResult<TOrderReturn>> {
-    return await orderRepository.findAll(options);
+    return await orderRepository.findAll(options, status);
   }
 
   async findOne(id: number): Promise<TOrderReturn> {

@@ -33,6 +33,7 @@ class ProductRepository implements TProductRepository {
   async findAll(
     category?: string,
     options?: PaginateOptions,
+    name?: string,
   ): Promise<TPaginatedResult<TProduct>> {
     const page = Number(options?.page) || 1;
     const perPage = Number(options?.perPage) || 20;
@@ -42,6 +43,17 @@ class ProductRepository implements TProductRepository {
       products = await this.repository.product.findMany({
         where: {
           category: { name: { equals: category, mode: "insensitive" } },
+        },
+        skip,
+        take: perPage,
+        orderBy: {
+          id: "asc",
+        },
+      });
+    } else if (name) {
+      products = await this.repository.product.findMany({
+        where: {
+          name: { contains: name, mode: "insensitive" },
         },
         skip,
         take: perPage,

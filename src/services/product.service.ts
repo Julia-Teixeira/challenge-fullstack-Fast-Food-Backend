@@ -17,8 +17,9 @@ class ProductService {
   async findAll(
     category?: string,
     options?: PaginateOptions,
+    name?: string,
   ): Promise<TPaginatedResult<TProduct>> {
-    return await productRepository.findAll(category, options);
+    return await productRepository.findAll(category, options, name);
   }
 
   async findProductById(id: number): Promise<TProductReturnById> {

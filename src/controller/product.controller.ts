@@ -9,12 +9,14 @@ class ProductController {
     return response.json(product).status(201);
   }
   async getAllProducts(request: Request, response: Response) {
+    const queryName = request.query.name as string;
     const products = await productService.findAll(
       request.query.category as string,
       {
         page: Number(request.query.page) || 1,
         perPage: Number(request.query.perPage) || 20,
       },
+      queryName,
     );
     return response.json(products).status(200);
   }
