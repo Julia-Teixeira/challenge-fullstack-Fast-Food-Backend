@@ -2,7 +2,6 @@ import { TAdditional, TCreateAdditional } from "./additional.interface";
 import { TCategory, TCreateCategory } from "./category.interface";
 import {
   TCreateOrder,
-  TOrder,
   TOrderReturn,
   TReturnCreateOrder,
 } from "./order.interface";
@@ -12,6 +11,7 @@ import {
   TProduct,
   TProductReturnById,
 } from "./product.interface";
+import { TProductOrder as TCreateProductOrder } from "./productOrder.interface";
 
 export interface TProductRepository {
   create(data: TCreateProduct): Promise<TProduct>;
@@ -34,11 +34,16 @@ export interface TAdditionalRepository {
 
 export interface TOrderRepository {
   create(data: TCreateOrder): Promise<TReturnCreateOrder>;
-  findAll(): Promise<TOrderReturn[]>;
+  findAll(options?: PaginateOptions): Promise<TPaginatedResult<TOrderReturn>>;
   findOne(id: number): Promise<TOrderReturn>;
   alterStatus(
     id: number,
     status: "onGoing" | "finished",
   ): Promise<TReturnCreateOrder>;
+  delete(id: number): Promise<void>;
+}
+
+export interface TProductOrder {
+  create(data: TCreateProductOrder): Promise<any>;
   delete(id: number): Promise<void>;
 }
