@@ -7,6 +7,10 @@ import {
   TReturnCreateOrder,
 } from "../../interface/order.interface";
 import AppError from "../../error/app.error";
+import {
+  PaginateOptions,
+  TPaginatedResult,
+} from "../../interface/pagination.interface";
 
 class OrderRepository implements TOrderRepository {
   private repository: PrismaClient = prisma;
@@ -125,8 +129,18 @@ class OrderRepository implements TOrderRepository {
     return order;
   }
 
-  async findAll(): Promise<TOrderReturn[]> {
+  async findAll(
+    options?: PaginateOptions,
+  ): Promise<TPaginatedResult<TOrderReturn>> {
+    const page = Number(options?.page) || 1;
+    const perPage = Number(options?.perPage) || 20;
+    const skip = page > 0 ? perPage * (page - 1) : 0;
     const orders = await this.repository.order.findMany({
+      skip,
+      take: perPage,
+      orderBy: {
+        id: "asc",
+      },
       select: {
         id: true,
         status: true,
@@ -167,7 +181,20 @@ class OrderRepository implements TOrderRepository {
         },
       },
     });
-    return orders;
+
+    const totalOrders = await this.repository.order.count();
+    const lastPage = Math.ceil(totalOrders / perPage);
+    const response = {
+      total: totalOrders,
+      lastPage,
+      currentPage: page,
+      perPage,
+      prev: page > 1 ? page - 1 : null,
+      next: page < lastPage ? page + 1 : null,
+      data: orders,
+    };
+
+    return response;
   }
 
   async findOne(id: number): Promise<TOrderReturn> {

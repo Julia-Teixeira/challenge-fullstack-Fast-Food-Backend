@@ -4,15 +4,21 @@ import {
   TReturnCreateOrder,
 } from "../interface/order.interface";
 
-import orderRepository from "../database/repository/order.repository";
+import { orderRepository } from "../database/";
+import {
+  PaginateOptions,
+  TPaginatedResult,
+} from "../interface/pagination.interface";
 
 class OrderService {
   async createOrder(data: TCreateOrder) {
     return await orderRepository.create(data);
   }
 
-  async findAll() {
-    return await orderRepository.findAll();
+  async findAll(
+    options?: PaginateOptions,
+  ): Promise<TPaginatedResult<TOrderReturn>> {
+    return await orderRepository.findAll(options);
   }
 
   async findOne(id: number): Promise<TOrderReturn> {
