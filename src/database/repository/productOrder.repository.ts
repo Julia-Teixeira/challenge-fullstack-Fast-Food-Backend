@@ -13,7 +13,7 @@ class ProductOrderRepository implements TProductOrder {
     if (!data.additionalIds) {
       productOrder = await this.repository.productOrder.create({
         data: {
-          note: data.note,
+          note: data.note ? data.note : "",
           amount: data.amount,
           total: data.total,
           product: {
@@ -27,7 +27,7 @@ class ProductOrderRepository implements TProductOrder {
     } else {
       productOrder = await this.repository.productOrder.create({
         data: {
-          note: data.note,
+          note: data.note ? data.note : "",
           amount: data.amount,
           total: data.total,
           product: {
