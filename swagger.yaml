@@ -47,32 +47,67 @@ paths:
       summary: Get all products
       description: Retrieve all products in database
       operationId: getAllProducts
+      parameters:
+        - name: name
+          in: query
+          description: Name of product
+          schema:
+            type: string
+          required: false
+        - name: category
+          in: query
+          description: Category of product
+          schema:
+            type: string
+          required: false
+        - name: page
+          in: query
+          description: Page number
+          schema:
+            type: integer
+          required: false
+        - name: perPage
+          in: query
+          description: Items per page
+          schema:
+            type: integer
+          required: false
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/product'
-  /products/additional:
-    get:
-      tags:
-        - product
-      summary: Get all additional products
-      description: Retrieve all additional products in database
-      operationId: getAllAdditional
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/additional'
-
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    format: int64
+                    example: 10
+                  lastPage:
+                    type: integer
+                    format: int64
+                    example: 10
+                  currentPage:
+                    type: integer
+                    format: int64
+                    example: 1
+                  perPage:
+                    type: integer
+                    format: int64
+                    example: 10
+                  prev:
+                    type: integer
+                    format: int64
+                    example: 1
+                  next:
+                    type: integer
+                    format: int64
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/product'
   /products/{id}:
     get:
       tags:
@@ -123,15 +158,56 @@ paths:
       summary: Get all categories
       description: Retrieve all categories in database
       operationId: getAllCategories
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          schema:
+            type: integer
+          required: false
+        - name: perPage
+          in: query
+          description: Items per page
+          schema:
+            type: integer
+          required: false
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/category'
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    format: int64
+                    example: 10
+                  lastPage:
+                    type: integer
+                    format: int64
+                    example: 10
+                  currentPage:
+                    type: integer
+                    format: int64
+                    example: 1
+                  perPage:
+                    type: integer
+                    format: int64
+                    example: 10
+                  prev:
+                    type: integer
+                    format: int64
+                    example: 1
+                  next:
+                    type: integer
+                    format: int64
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/category'
+
   /additionals:
     post:
       tags:
@@ -158,15 +234,57 @@ paths:
       summary: Get all additionals
       description: Retrieve all additionals in database
       operationId: getAllAdditionals
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          schema:
+            type: integer
+          required: false
+        - name: perPage
+          in: query
+          description: Items per page
+          schema:
+            type: integer
+          required: false
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/additional'
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    format: int64
+                    example: 10
+                  lastPage:
+                    type: integer
+                    format: int64
+                    example: 10
+                  currentPage:
+                    type: integer
+                    format: int64
+                    example: 1
+                  perPage:
+                    type: integer
+                    format: int64
+                    example: 10
+                  prev:
+                    type: integer
+                    format: int64
+                    example: 1
+                  next:
+                    type: integer
+                    format: int64
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/additional'
+
+
   /productsOrders:
     post:
       tags:
@@ -205,6 +323,16 @@ paths:
       responses:
         '204':
           description: ProductOrder deleted
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "ProductOrder not found"
   /orders:
     get:
       tags:
@@ -212,15 +340,65 @@ paths:
       summary: Get all orders
       description: Retrieve all orders in database
       operationId: getAllOrders
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          schema:
+            type: integer
+          required: false
+        - name: perPage
+          in: query
+          description: Items per page
+          schema:
+            type: integer
+          required: false
+        - name: status
+          in: query
+          description: Status of order
+          schema:
+            type: string
+            enum:
+              - onGoing
+              - delivered
+              - finished
+          required: false
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/orderGetResponse'
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    format: int64
+                    example: 10
+                  lastPage:
+                    type: integer
+                    format: int64
+                    example: 10
+                  currentPage:
+                    type: integer
+                    format: int64
+                    example: 1
+                  perPage:
+                    type: integer
+                    format: int64
+                    example: 10
+                  prev:
+                    type: integer
+                    format: int64
+                    example: 1
+                  next:
+                    type: integer
+                    format: int64
+                    example: 1
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/orderGetResponse'
     post:
       tags:
         - order
@@ -256,13 +434,23 @@ paths:
             type: integer
             format: int64
       responses:
-
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/orderGetResponse'
+        '404':
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Order not found"
+
     patch:
       tags:
         - order
@@ -292,6 +480,15 @@ paths:
                 $ref: '#/components/schemas/orderPatchResponse'
         '404':
           description: Order not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Order not found"
+
     delete:
         tags:
           - order
@@ -309,6 +506,16 @@ paths:
         responses:
           '204':
             description: Order deleted
+          '404':
+            description: Order not found
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      example: "Order not found"
 
 components:
   schemas:
@@ -372,10 +579,6 @@ components:
           type: integer
           format: int64
           example: 10
-        productId:
-          type: integer
-          format: int64
-          example: 1
         amount:
           type: integer
           format: int64
@@ -386,10 +589,43 @@ components:
         total:
           type: string
           example: "30.5"
-        createdAt:
-          type: string
-          format: date-time
-          example: "2022-01-01T00:00:00.000Z"
+        productId:
+          type: array
+          items:
+            type: number
+            format: int64
+            example: 1
+        orderId:
+          type: null
+          example: null
+        additionalIds:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: number
+                format: int64
+                example: 1
+              name:
+                type: string
+                example: "Bacon"
+              price:
+                type: string
+                example: "1"
+              imgCover:
+                type: string
+                example: "https://fastfood.com/image.png"
+              description:
+                type: string
+                example: "10g"
+              type:
+                type: string
+                example: "ingredient"
+              createdAt:
+                type: string
+                format: date-time
+                example: "2022-01-01T00:00:00.000Z"
     productOrderRequest:
       type: object
       required:
@@ -398,21 +634,29 @@ components:
         - note
         - total
       properties:
-        productId:
-          type: integer
-          format: int64
-          example: 1
+        note:
+          type: string
+          example: "Sem cebola"
         amount:
           type: integer
           format: int64
           example: 1
-        note:
-          type: string
-          example: "Sem cebola"
+        productId:
+          type: array
+          items:
+            type: number
+            format: int64
+            example: 1
         total:
           type: number
           format: float
           example: "30.5"
+        additionalIds:
+          type: array
+          items:
+            type: number
+            format: int64
+            example: 1
     orderRequest:
       type: object
       required:
@@ -558,28 +802,6 @@ components:
           type: string
           format: date-time
           example: "2022-01-01T00:00:00.000Z"
-        payment:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                format: int64
-                example: 1
-              type:
-                type: string
-                example: credit
-                enum:
-                  - credit
-                  - debit
-                  - inCash
-              change:
-                type: string
-                example: "0"
-              total:
-                type: string
-                example: "30.5"
         productOrder:
           type: array
           items:
@@ -596,6 +818,9 @@ components:
               note:
                 type: string
                 example: "Sem cebola"
+              total:
+                type: string
+                example: "30.5"
               additionalIds:
                 type: array
                 items:
@@ -614,7 +839,6 @@ components:
                     description:
                       type: string
                       example: "10g"
-
               product:
                 type: object
                 properties:
@@ -631,6 +855,24 @@ components:
                   price:
                     type: string
                     example: "30.5"
+        payment:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                example: credit
+                enum:
+                  - credit
+                  - debit
+                  - inCash
+              change:
+                type: string
+                example: "0"
+              total:
+                type: string
+                example: "30.5"
     category:
       type: object
       properties:
@@ -731,3 +973,4 @@ components:
         imgCover:
           type: string
           example: "https://fastfood.com/image.png"
+
