@@ -1,6 +1,6 @@
 import z from "zod";
-import ProductOrderSchema from "../schema/productOrder.schema";
+import { productOrderSchema } from "../schema/productOrder.schema";
 
-type TProductOrder = z.infer<typeof ProductOrderSchema.productOrderSchema>;
+type TProductOrder = z.infer<typeof productOrderSchema>;
 
 export { TProductOrder };

@@ -3,13 +3,17 @@ import categoriesService from "../services/categories.service";
 
 class CategoriesController {
   async getAllCategories(request: Request, response: Response) {
-    const categories = await categoriesService.findAll();
+    const options = {
+      page: Number(request.query.page) || 1,
+      perPage: Number(request.query.perPage) || 20,
+    };
+    const categories = await categoriesService.findAll(options);
     return response.json(categories).status(200);
   }
 
   async createCategory(request: Request, response: Response) {
-    const category = await categoriesService.createCategory(request.body);
-    return response.json(category).status(201);
+    const category = await categoriesService.create(request.body);
+    return response.status(201).json(category);
   }
 }
 

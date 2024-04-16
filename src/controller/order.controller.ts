@@ -6,10 +6,20 @@ const orderService = new OrderService();
 class OrderController {
   async createOrder(request: Request, response: Response) {
     const order = await orderService.createOrder(request.body);
-    return response.json(order).status(201);
+    return response.status(201).json(order);
   }
   async getAllOrders(request: Request, response: Response) {
-    const orders = await orderService.findAll();
+    const options = {
+      page: Number(request.query.page) || 1,
+      perPage: Number(request.query.perPage) || 30,
+    };
+    const query = request.query.status as
+      | "onGoing"
+      | "finished"
+      | "delivered"
+      | undefined;
+
+    const orders = await orderService.findAll(options, query);
     return response.json(orders).status(200);
   }
 

@@ -1,172 +1,40 @@
-import { PrismaClient } from "@prisma/client";
-import prisma from "../database/prisma";
+import {
+  TCreateOrder,
+  TOrderReturn,
+  TReturnCreateOrder,
+} from "../interface/order.interface";
+
+import { orderRepository } from "../database/";
+import {
+  PaginateOptions,
+  TPaginatedResult,
+} from "../interface/pagination.interface";
 
 class OrderService {
-  private repository: PrismaClient = prisma;
-
-  async createOrder(data: any) {
-    const order = await this.repository.order.create({
-      data: {
-        status: "onGoing",
-        code: data.code,
-        nameCostumer: data.nameCostumer,
-        total: data.total,
-      },
-    });
-
-    for (const productOrder of data.productOrder) {
-      await this.repository.order.update({
-        where: {
-          id: order.id,
-        },
-        data: {
-          productOrder: {
-            connect: {
-              id: productOrder,
-            },
-          },
-        },
-      });
-      await this.repository.productOrder.update({
-        where: {
-          id: productOrder,
-        },
-        data: {
-          Order: {
-            connect: {
-              id: order.id,
-            },
-          },
-        },
-      });
-    }
-
-    const payment = await this.repository.payment.create({
-      data: {
-        type: data.payment.type,
-        change: data.payment.change,
-        total: data.payment.total,
-        orderId: order.id,
-      },
-    });
-
-    await this.repository.order.update({
-      where: {
-        id: order.id,
-      },
-      data: {
-        payment: {
-          connect: {
-            id: payment.id,
-          },
-        },
-      },
-    });
-
-    return order;
+  async createOrder(data: TCreateOrder) {
+    return await orderRepository.create(data);
   }
 
-  async findAll() {
-    const orders = await this.repository.order.findMany({
-      select: {
-        id: true,
-        status: true,
-        code: true,
-        nameCostumer: true,
-        createdAt: true,
-        productOrder: {
-          select: {
-            id: true,
-            amount: true,
-            note: true,
-            additionalIds: {
-              select: {
-                id: true,
-                name: true,
-                description: true,
-              },
-            },
-            product: {
-              select: {
-                id: true,
-                name: true,
-                imgCover: true,
-              },
-            },
-          },
-        },
-      },
-    });
-    return orders;
+  async findAll(
+    options?: PaginateOptions,
+    status?: "onGoing" | "finished" | "delivered",
+  ): Promise<TPaginatedResult<TOrderReturn>> {
+    return await orderRepository.findAll(options, status);
   }
 
-  async findOne(id: number) {
-    const order = await this.repository.order.findUnique({
-      where: {
-        id,
-      },
-      select: {
-        id: true,
-        status: true,
-        code: true,
-        nameCostumer: true,
-        createdAt: true,
-        total: true,
-        payment: {
-          select: {
-            id: true,
-            type: true,
-            change: true,
-            total: true,
-          },
-        },
-        productOrder: {
-          select: {
-            id: true,
-            amount: true,
-            note: true,
-            additionalIds: {
-              select: {
-                id: true,
-                name: true,
-                description: true,
-                price: true,
-              },
-            },
-            product: {
-              select: {
-                id: true,
-                name: true,
-                imgCover: true,
-                price: true,
-              },
-            },
-          },
-        },
-      },
-    });
-    return order;
+  async findOne(id: number): Promise<TOrderReturn> {
+    return await orderRepository.findOne(id);
   }
 
-  async alterOrderStatus(id: number, status: "onGoing" | "finished") {
-    const order = await this.repository.order.update({
-      where: {
-        id,
-      },
-      data: {
-        status: status,
-      },
-    });
-    return order;
+  async alterOrderStatus(
+    id: number,
+    status: "onGoing" | "finished",
+  ): Promise<TReturnCreateOrder> {
+    return await orderRepository.alterStatus(id, status);
   }
 
-  async deleteOrder(id: number) {
-    await this.repository.order.delete({
-      where: {
-        id,
-      },
-    });
-    return null;
+  async deleteOrder(id: number): Promise<void> {
+    return await orderRepository.delete(id);
   }
 }
 

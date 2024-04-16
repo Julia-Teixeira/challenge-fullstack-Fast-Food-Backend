@@ -1,46 +1,29 @@
-import { PrismaClient } from "@prisma/client";
-import prisma from "../database/prisma";
 import {
   TCreateProduct,
   TProduct,
   TProductReturnById,
 } from "../interface/product.interface";
+import { productRepository } from "../database/";
+import {
+  PaginateOptions,
+  TPaginatedResult,
+} from "../interface/pagination.interface";
 
 class ProductService {
-  private repository: PrismaClient = prisma;
-
   async createProduct(data: TCreateProduct) {
-    const product: TProduct = await this.repository.product.create({
-      data: {
-        name: data.name,
-        price: data.price,
-        imgCover: data.imgCover,
-        description: data.description ? data.description : null,
-        category: {
-          connect: {
-            id: data.categoryId,
-          },
-        },
-      },
-    });
-    return product;
+    return await productRepository.create(data);
   }
 
-  async findAll(): Promise<TProduct[]> {
-    const products = await this.repository.product.findMany({});
-    return products;
+  async findAll(
+    category?: string,
+    options?: PaginateOptions,
+    name?: string,
+  ): Promise<TPaginatedResult<TProduct>> {
+    return await productRepository.findAll(category, options, name);
   }
 
   async findProductById(id: number): Promise<TProductReturnById> {
-    const product = await this.repository.product.findUnique({
-      where: { id },
-    });
-    return product as unknown as TProductReturnById;
-  }
-
-  async findAllAdditional() {
-    const additional = await this.repository.additional.findMany();
-    return additional;
+    return await productRepository.findById(id);
   }
 }
 

@@ -41,6 +41,13 @@ $ npm install ou yarn
 # Execute a aplicação em modo de desenvolvimento
 $ npm run dev ou yarn dev
 
+# Para rodar os testes, deverá ser criado o arquivo .env.test e preenche-lo corretamente
+# Rodas as migrações para a database de teste
+$ npm run migrate:test ou yarn migrate:test
+
+# Rodar os testes
+$ npm run test ou yarn test
+
 ```
 # Documentação
 
@@ -55,21 +62,38 @@ $ npm run dev ou yarn dev
 | ---- | ----------- |
 | 200 | Operação bem sucedida |
 
+##### Parâmetros
+| Nome | Localizado em | Descrição | Requerido | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| name | query | Nome do produto | Não | string |
+| category | query | Nome da categoria | Não | string |
+| page | query | Número da página | Não | number |
+| perPage | query | Número de produtos por página | Não | number |
+
+
 ##### Responses
 
 `STATUS 200`
 ```json
-[
-  {
-    "id": 10,
-    "name": "Smash da casa",
-    "price": "30.5",
-    "description": "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
-    "image": "https://fastfood.com/image.png",
-    "categoryId": 1,
-    "createdAt": "2022-01-01T00:00:00.000Z"
-  }
-]
+{
+  "total": 10,
+  "lastPage": 10,
+  "currentPage": 1,
+  "perPage": 10,
+  "prev": 1,
+  "next": 1,
+  "data": [
+    {
+      "id": 10,
+      "name": "Smash da casa",
+      "price": "30.5",
+      "description": "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
+      "image": "https://fastfood.com/image.png",
+      "categoryId": 1,
+      "createdAt": "2022-01-01T00:00:00.000Z"
+    }
+  ]
+}
 ```
 
 `POST`
@@ -106,35 +130,6 @@ $ npm run dev ou yarn dev
   "categoryId": 1,
   "createdAt": "2022-01-01T00:00:00.000Z"
 }
-```
-
-
-### /products/additional
-`GET`
-
-#### Descrição: Retorna todos adicionas dos produtos
-
-##### Respostas
-
-| Código | Descrição |
-| ---- | ----------- |
-| 200 | Operação bem sucedida |
-
-##### Responses
-`STATUS 200`
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Bacon",
-    "price": "1",
-    "type": "ingredient",
-    "description": "10g",
-    "imgCover": "https://fastfood.com/image.png",
-    "createdAt": "2022-01-01T00:00:00.000Z"
-  }
-]
 ```
 
 ### /products/{id}
@@ -187,20 +182,35 @@ $ npm run dev ou yarn dev
 | ---- | ----------- |
 | 200 | Operação bem sucedida |
 
+##### Parâmetros
+| Nome | Localizado em | Descrição | Requerido | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| page | query | Número da página | Não | number |
+| perPage | query | Número de produtos por página | Não | number |
+
 `STATUS 200`
 ```json
-[
-  {
-    "id": 1,
-    "name": "Bacon",
-    "price": "1",
-    "type": "ingredient",
-    "description": "10g",
-    "imgCover": "https://fastfood.com/image.png",
-    "createdAt": "2022-01-01T00:00:00.000Z"
-  }
-]
+{
+  "total": 10,
+  "lastPage": 10,
+  "currentPage": 1,
+  "perPage": 10,
+  "prev": 1,
+  "next": 1,
+  "data": [
+    {
+      "id": 1,
+      "name": "Bacon",
+      "price": "1",
+      "type": "ingredient",
+      "description": "10g",
+      "imgCover": "https://fastfood.com/image.png",
+      "createdAt": "2022-01-01T00:00:00.000Z"
+    }
+  ]
+}
 ```
+
 
 `POST`
 #### Descrição: Cria um novo adicional no banco de dados
@@ -245,27 +255,41 @@ $ npm run dev ou yarn dev
 | ---- | ----------- |
 | 200 | Operação bem sucedida |
 
+##### Parâmetros
+| Nome | Localizado em | Descrição | Requerido | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| page | query | Número da página | Não | number |
+| perPage | query | Número de produtos por página | Não | number |
+
 `STATUS 200`
 ```json
-[
-  {
-    "id": 1,
-    "name": "Combos",
-    "imgCover": "https://fastfood.com/image.png",
-    "createdAt": "2022-01-01T00:00:00.000Z",
-    "product": [
-      {
-        "id": 10,
-        "name": "Smash da casa",
-        "price": "30.5",
-        "description": "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
-        "image": "https://fastfood.com/image.png",
-        "categoryId": 1,
-        "createdAt": "2022-01-01T00:00:00.000Z"
-      }
-    ]
-  }
-]
+{
+  "total": 10,
+  "lastPage": 10,
+  "currentPage": 1,
+  "perPage": 10,
+  "prev": 1,
+  "next": 1,
+  "data": [
+    {
+      "id": 1,
+      "name": "Combos",
+      "imgCover": "https://fastfood.com/image.png",
+      "createdAt": "2022-01-01T00:00:00.000Z",
+      "product": [
+        {
+          "id": 10,
+          "name": "Smash da casa",
+          "price": "30.5",
+          "description": "2x hambúrguer 200g, queijo, cheddar, tomate, alface, picles, cebola, molho da casa",
+          "image": "https://fastfood.com/image.png",
+          "categoryId": 1,
+          "createdAt": "2022-01-01T00:00:00.000Z"
+        }
+      ]
+    }
+  ]
+}
 ```
 
 `POST`
@@ -359,47 +383,62 @@ $ npm run dev ou yarn dev
 | ---- | ----------- |
 | 200 | Operação bem sucedida |
 
+##### Parâmetros
+| Nome | Localizado em | Descrição | Requerido | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| page | query | Número da página | Não | number |
+| perPage | query | Número de produtos por página | Não | number |
+| status | query | Status do pedido | Não | "onGoing", "delivered" ou "finished" |
+
 `STATUS 200`
 ```json
-[
-  {
-    "id": 10,
-    "status": "finished",
-    "code": 200,
-    "nameCostumer": "Julieta",
-    "total": "30.5",
-    "createdAt": "2022-01-01T00:00:00.000Z",
-    "payment": [
-      {
-        "id": 1,
-        "type": "credit",
-        "change": "0",
-        "total": "30.5"
-      }
-    ],
-    "productOrder": [
-      {
-        "id": 1,
-        "amount": 1,
-        "note": "Sem cebola",
-        "additionalIds": [
-          {
-            "id": 1,
-            "name": "Bacon",
-            "price": "10.5",
-            "description": "10g"
-          }
-        ],
-        "product": {
+{
+  "total": 10,
+  "lastPage": 10,
+  "currentPage": 1,
+  "perPage": 10,
+  "prev": 1,
+  "next": 1,
+  "data": [
+    {
+      "id": 10,
+      "status": "finished",
+      "code": 200,
+      "nameCostumer": "Julieta",
+      "total": "30.5",
+      "createdAt": "2022-01-01T00:00:00.000Z",
+      "productOrder": [
+        {
           "id": 1,
-          "name": "Smash da casa",
-          "imgCover": "https://fastfood.com/image.png",
-          "price": "30.5"
+          "amount": 1,
+          "note": "Sem cebola",
+          "total": "30.5",
+          "additionalIds": [
+            {
+              "id": 1,
+              "name": "Bacon",
+              "price": "10.5",
+              "description": "10g"
+            }
+          ],
+          "product": {
+            "id": 1,
+            "name": "Smash da casa",
+            "imgCover": "https://fastfood.com/image.png",
+            "price": "30.5"
+          }
         }
-      }
-    ]
-  }
-]
+      ],
+      "payment": [
+        {
+          "type": "credit",
+          "change": "0",
+          "total": "30.5"
+        }
+      ]
+    }
+  ]
+}
 ```
 
 `POST`

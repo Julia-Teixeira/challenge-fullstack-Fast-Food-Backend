@@ -6,10 +6,18 @@ const productService = new ProductService();
 class ProductController {
   async createProduct(request: Request, response: Response) {
     const product = await productService.createProduct(request.body);
-    return response.json(product).status(201);
+    return response.status(201).json(product);
   }
   async getAllProducts(request: Request, response: Response) {
-    const products = await productService.findAll();
+    const queryName = request.query.name as string;
+    const products = await productService.findAll(
+      request.query.category as string,
+      {
+        page: Number(request.query.page) || 1,
+        perPage: Number(request.query.perPage) || 20,
+      },
+      queryName,
+    );
     return response.json(products).status(200);
   }
 
@@ -17,11 +25,6 @@ class ProductController {
     const { id } = request.params;
     const product = await productService.findProductById(Number(id));
     return response.json(product).status(200);
-  }
-
-  async getAdditionalData(request: Request, response: Response) {
-    const additional = await productService.findAllAdditional();
-    return response.json(additional).status(200);
   }
 }
 
