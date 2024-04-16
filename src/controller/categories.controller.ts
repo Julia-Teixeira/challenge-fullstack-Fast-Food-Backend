@@ -13,7 +13,7 @@ class CategoriesController {
 
   async createCategory(request: Request, response: Response) {
     const category = await categoriesService.create(request.body);
-    return response.json(category).status(201);
+    return response.status(201).json(category);
   }
 }
 

@@ -6,11 +6,22 @@ import {
   PaginateOptions,
   TPaginatedResult,
 } from "../../interface/pagination.interface";
+import AppError from "../../error/app.error";
 
 class CategotyRepository implements TCategoryRepository {
   private repository: PrismaClient = prisma;
 
   async create(data: TCreateCategory): Promise<TCategory> {
+    const searchCategory = await this.repository.category.findFirst({
+      where: {
+        name: { equals: data.name, mode: "insensitive" },
+      },
+    });
+
+    if (searchCategory) {
+      throw new AppError("Category already exists", 409);
+    }
+
     const category: TCategory = await this.repository.category.create({
       data: {
         name: data.name,

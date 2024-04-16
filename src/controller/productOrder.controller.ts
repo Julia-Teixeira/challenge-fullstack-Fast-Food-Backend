@@ -8,7 +8,7 @@ class ProductOrderController {
     const productOrder = await productOrderService.createProductOrder(
       request.body,
     );
-    return response.json(productOrder).status(201);
+    return response.status(201).json(productOrder);
   }
 
   async deleteProductOrder(request: Request, response: Response) {

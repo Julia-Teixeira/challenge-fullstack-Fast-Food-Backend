@@ -6,7 +6,7 @@ const productService = new ProductService();
 class ProductController {
   async createProduct(request: Request, response: Response) {
     const product = await productService.createProduct(request.body);
-    return response.json(product).status(201);
+    return response.status(201).json(product);
   }
   async getAllProducts(request: Request, response: Response) {
     const queryName = request.query.name as string;

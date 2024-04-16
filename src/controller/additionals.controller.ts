@@ -4,7 +4,7 @@ import additionalsService from "../services/additionals.service";
 class AdditionalController {
   async create(request: Request, response: Response) {
     const additional = await additionalsService.create(request.body);
-    return response.json(additional).status(201);
+    return response.status(201).json(additional);
   }
 
   async getAll(request: Request, response: Response) {

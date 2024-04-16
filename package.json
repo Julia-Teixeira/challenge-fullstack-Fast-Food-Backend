@@ -9,7 +9,9 @@
     "start": "node dist/server.js",
     "prepare": "husky",
     "migrate": "npx prisma migrate dev",
-    "vercel-build": "npx tsc && prisma migrate dev"
+    "vercel-build": "npx tsc && prisma migrate dev",
+    "test": "dotenv -e .env.test -- vitest",
+    "migrate:test": "dotenv -e .env.test -- npx prisma migrate dev"
   },
   "author": "Julia Pereira Teixeira",
   "license": "ISC",
@@ -31,6 +33,7 @@
   "dependencies": {
     "@prisma/client": "^5.11.0",
     "@types/node": "*",
+    "@types/supertest": "^6.0.2",
     "@types/swagger-ui-express": "^4.1.6",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
@@ -39,7 +42,9 @@
     "helmet": "^7.1.0",
     "prisma": "^5.11.0",
     "reflect-metadata": "^0.2.1",
+    "supertest": "^6.3.4",
     "swagger-ui-express": "^5.0.0",
+    "vitest": "^1.5.0",
     "yaml": "^2.4.1",
     "zod": "^3.22.4",
     "zod-prisma-types": "^3.1.6"

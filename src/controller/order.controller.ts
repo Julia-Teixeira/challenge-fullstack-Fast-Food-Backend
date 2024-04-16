@@ -6,7 +6,7 @@ const orderService = new OrderService();
 class OrderController {
   async createOrder(request: Request, response: Response) {
     const order = await orderService.createOrder(request.body);
-    return response.json(order).status(201);
+    return response.status(201).json(order);
   }
   async getAllOrders(request: Request, response: Response) {
     const options = {
