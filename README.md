@@ -41,6 +41,13 @@ $ npm install ou yarn
 # Execute a aplicação em modo de desenvolvimento
 $ npm run dev ou yarn dev
 
+# Para rodar os testes, deverá ser criado o arquivo .env.test e preenche-lo corretamente
+# Rodas as migrações para a database de teste
+$ npm run migrate:test ou yarn migrate:test
+
+# Rodar os testes
+$ npm run test ou yarn test
+
 ```
 # Documentação
 
